@@ -1197,6 +1197,42 @@ Or the path to a file containing the Python dictionary:
 
        :ref:`Configuring code hosting credentials in Docker <docker-vcs-config>`
 
+.. envvar:: WEBLATE_GITHUB_APP_ID
+.. envvar:: WEBLATE_GITHUB_APP_INSTALLATION_ID
+.. envvar:: WEBLATE_GITHUB_APP_KEY
+.. envvar:: WEBLATE_GITHUB_APP_HOST
+
+    Configures :ref:`vcs-github` to authenticate using a `GitHub App`_ instead
+    of a personal access token.
+
+    Set :envvar:`WEBLATE_GITHUB_APP_ID` to the numeric App ID,
+    :envvar:`WEBLATE_GITHUB_APP_INSTALLATION_ID` to the installation ID, and
+    :envvar:`WEBLATE_GITHUB_APP_KEY` to the Base64-encoded private key (PEM
+    format).  A ``_FILE`` suffix variant is also supported for all three
+    variables.
+
+    :envvar:`WEBLATE_GITHUB_APP_HOST` defaults to ``api.github.com`` and only
+    needs to be changed for GitHub Enterprise Server instances.
+
+    Weblate uses ``gh token generate`` from the `gh-token`_ project to
+    exchange these credentials for short-lived installation tokens and
+    automatically refreshes them every 55 minutes via a Celery task.
+
+    Example:
+
+    .. code-block:: shell
+
+       WEBLATE_GITHUB_APP_ID=123456
+       WEBLATE_GITHUB_APP_INSTALLATION_ID=12345678
+       WEBLATE_GITHUB_APP_KEY=LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQ==
+
+    .. seealso::
+
+       :ref:`vcs-github`, `GitHub App`_, `gh-token`_
+
+    .. _GitHub App: https://docs.github.com/en/developers/apps/building-github-apps
+    .. _gh-token: https://github.com/Link-/gh-token
+
 .. envvar:: WEBLATE_GITLAB_USERNAME
 .. envvar:: WEBLATE_GITLAB_TOKEN
 .. envvar:: WEBLATE_GITLAB_HOST

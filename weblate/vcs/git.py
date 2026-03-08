@@ -1654,6 +1654,29 @@ class GithubRepository(GitMergeRequestBase):
         "This will push changes and create a GitHub pull request."
     )
 
+    def get_credentials_by_hostname(self, hostname: str) -> dict[str, str]:
+        from weblate.vcs.github_app import get_github_app_token, has_github_app_config
+
+        try:
+            return super().get_credentials_by_hostname(hostname)
+        except RepositoryError:
+            pass
+
+        if not has_github_app_config(hostname):
+            raise RepositoryError(
+                0, f"{self.name} API access for {hostname} is not configured"
+            )
+
+        token = get_github_app_token(hostname)
+        username = os.environ.get("WEBLATE_GITHUB_USERNAME", "x-access-token")
+        return {"username": username, "token": token}
+
+    @classmethod
+    def is_configured(cls) -> bool:
+        from weblate.vcs.github_app import has_github_app_config
+
+        return bool(cls.get_credentials_configuration()) or has_github_app_config()
+
     def format_api_host(self, host):
         if host == "github.com":
             return "api.github.com"

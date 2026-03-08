@@ -5,6 +5,8 @@ Weblate 5.17
 
 .. rubric:: New features
 
+* :ref:`vcs-github` now supports GitHub App authentication via ``WEBLATE_GITHUB_APP_ID``, ``WEBLATE_GITHUB_APP_INSTALLATION_ID``, and ``WEBLATE_GITHUB_APP_KEY`` environment variables.
+
 .. rubric:: Improvements
 
 * Track origin of newly added source strings.

@@ -395,12 +395,39 @@ You need to configure API credentials (:setting:`GITHUB_CREDENTIALS`) in the
 Weblate settings to make this work. Once configured, you will see a
 :guilabel:`GitHub` option when selecting :ref:`component-vcs`.
 
+Alternatively, you can authenticate using a `GitHub App`_ by setting the
+following environment variables:
+
+``WEBLATE_GITHUB_APP_ID``
+   The GitHub App's numeric application ID.
+
+``WEBLATE_GITHUB_APP_INSTALLATION_ID``
+   The installation ID for the GitHub App on the target organisation or
+   account.
+
+``WEBLATE_GITHUB_APP_KEY``
+   The GitHub App's private key encoded as Base64. A ``_FILE`` suffix variant
+   (e.g. ``WEBLATE_GITHUB_APP_KEY_FILE``) pointing to a file containing the
+   Base64-encoded key is also accepted.
+
+``WEBLATE_GITHUB_APP_HOST``
+   The API hostname to use (default: ``api.github.com``). Set this when
+   connecting to a GitHub Enterprise Server instance.
+
+When GitHub App credentials are set, Weblate uses ``gh token generate`` from
+the `gh-token`_ project to obtain short-lived installation tokens and
+automatically refreshes them every 55 minutes.
+
 .. seealso::
 
    * :ref:`push-changes`
    * :setting:`GITHUB_CREDENTIALS`
+   * `GitHub App`_
+   * `gh-token`_
 
 .. _GitHub API: https://docs.github.com/en/rest
+.. _GitHub App: https://docs.github.com/en/developers/apps/building-github-apps
+.. _gh-token: https://github.com/Link-/gh-token
 
 .. _vcs-gitlab:
 .. _gitlab-push:
